@@ -13,7 +13,7 @@ const Login = () => {
         .then(res=>{
             const loggedINuser = res.user
             console.log("Logged In User: ", loggedINuser);
-            navigate('/')
+            navigate('/dashboard/dHome')
         })
 
         console.log(data)

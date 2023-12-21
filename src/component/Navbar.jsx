@@ -3,22 +3,25 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProviders";
 import logo from '../assets/logo.png';
 const Navbar = () => {
-    const { user } = useContext(AuthContext)
-    console.log(user.email);
+    const { user,logOut } = useContext(AuthContext)
+    const handleSignOut = () => {
+        logOut()
+    }
+    // console.log(user.email);
     const navItems = <>
         <li><Link to='/'> Home</Link></li>
         <li><Link to='/'> About us</Link></li>
         <li><Link to='/survey'> Surveys</Link></li>
         <li><Link to='/dashboard/payment'>Pro</Link></li>
         <li><Link to='/order/salad'>Contact </Link></li>
-        <li><Link to='/dashboard'>Dashboard </Link></li>
-        {/* {
+        <li><Link to='/dashboard/dHome'>Dashboard </Link></li>
+        {
             user ? <><li> <Link onClick={handleSignOut} className="">Logout</Link></li></> :
                 <>
                     <li><Link to='/login'>Login</Link></li>
                     <li><Link to='/signUp'>SignUp</Link></li>
                 </>
-        } */}
+        }
 
 
 
@@ -54,8 +57,9 @@ const Navbar = () => {
                             user ?
 
                                 <div className="flex gap-4 items-center mr-4">
-                                    <p className="font-bold">{user.email}</p>
-                                    <img src={user?.email} className="w-10 rounded-full" alt="" />
+                                    <p className="font-bold">{user?.displayName
+}</p>
+                                    <img src={user?.photoURL} className="w-10 rounded-full" alt="" />
                                 </div> : <></>
                         }
                     </div>

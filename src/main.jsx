@@ -5,7 +5,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
+import Dashboard from './Layout/Dashboard/Dashboard';
 import Main from './Layout/Main/Main';
+import CreateTask from './Pages/Dashboard/CreateTask/CreateTask';
+import DashboardHome from './Pages/Dashboard/DashboardHome';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Register/Register';
@@ -29,6 +32,26 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: 'dashboard',
+    element: <Dashboard></Dashboard>,
+    children: [
+
+     
+      {
+        path: 'dHome',
+        element: <DashboardHome></DashboardHome>
+      },
+      {
+        path: 'createTask',
+        element: <CreateTask></CreateTask>
+      },
+      {
+        path: '*',
+        element: <div>404 not found</div>
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
