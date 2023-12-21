@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProviders";
 import logo from '../assets/logo.png';
 const Navbar = () => {
+    const { user } = useContext(AuthContext)
+    console.log(user.email);
     const navItems = <>
         <li><Link to='/'> Home</Link></li>
         <li><Link to='/'> About us</Link></li>
@@ -23,7 +27,7 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="navbar rounded-b-lg fixed z-50 bg-black lg:text-white text-black bg-opacity-30 ">
+            <div className="navbar rounded-b-lg fixed z-50 bg-black lg:text-white text-black p-4 bg-opacity-0 ">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -45,21 +49,16 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end">
 
-                    {/* <div>
+                    <div>
                         {
-                            user ? <div className="flex items-center">
-                                <div className="mr-2">
-                                    <button className="flex btn btn-sm rounded-2xl bg-gray-200 border-0">
-                                        <img src={gem} className="w-6" alt="" />
-                                        <p>{totalUserGemsValue?totalUserGemsValue : 0 }</p>
-                                    </button>
-                                </div>
+                            user ?
+
                                 <div className="flex gap-4 items-center mr-4">
-                                    <p className="font-bold">{user.displayName}</p>
-                                    <img src={user?.photoURL} className="w-10 rounded-full" alt="" />
-                                </div></div> : <></>
+                                    <p className="font-bold">{user.email}</p>
+                                    <img src={user?.email} className="w-10 rounded-full" alt="" />
+                                </div> : <></>
                         }
-                    </div> */}
+                    </div>
                 </div>
 
             </div>
