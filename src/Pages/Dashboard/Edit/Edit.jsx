@@ -1,42 +1,47 @@
-import { useContext, useEffect } from "react";
+/* eslint-disable react/no-unknown-property */
+
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../../Providers/AuthProviders";
 
-const CreateTask = () => {
-    const {user} = useContext(AuthContext);
-    const { register, handleSubmit , setValue} = useForm()
-
-
-    useEffect(() => {
-        setValue('email', user?.email);
-        setValue('status', 'todo');
+const Edit = () => {
+    const taskData = useLoaderData();
+    console.log(taskData);
+    const { register, handleSubmit } = useForm()
+    const {name, description, date, priority, _id} = taskData
+    const navigate = useNavigate();
 
 
-      }, [user, setValue]);
     const onSubmit = (data) => {
-        console.log(data);
-        fetch('https://scic-job-task-server-three.vercel.app/tasks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then((res) => res.json())
-            .then(data => {
-                console.log(data)
-                if (data.insertedId) {
+        try {
+            axios.put(`https://scic-job-task-server-three.vercel.app/tasks/${_id}`, data)
+            .then(res => {
+                if(res.data.modifiedCount > 0) {
                     Swal.fire(
-                        'Good job!',
-                        'Tasks added successfully',
+                        'Welcome!',
+                        'Task has been Updated!',
                         'success'
-                    )
+                      )
                 }
+                // console.log(res.data);
+                navigate("/dashboard/home")
             })
+
+        } catch (error) {
+            console.log(error.message);
+        }
     }
+
+
+
     return (
         <div>
+            <div>
+            <div>
+                <h1 className='font-bold mt-5 text-3xl'>Edit task</h1>
+            </div>
+            </div>
             <div className="w-9/12 mx-auto   px-16 rounded-xl">
                 <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -84,11 +89,11 @@ const CreateTask = () => {
                     </div>
 
 
-                    <input type="submit" className="btn bg-sky-950  border-0 hover:bg-teal-600 text-white font-semibold" value='Add Task ' />
+                    <input type="submit" className="btn bg-sky-950  border-0 hover:bg-teal-600 text-white font-semibold" value='Update Task ' />
                 </form>
             </div>
         </div>
     );
 };
 
-export default CreateTask;
+export default Edit;

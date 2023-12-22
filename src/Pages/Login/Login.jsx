@@ -5,7 +5,7 @@ import { AuthContext } from "../../Providers/AuthProviders";
 import bannerImage from '../../assets/bg.jpg';
 import login from '../../assets/login1.png';
 const Login = () => {
-    const {signInUser} = useContext(AuthContext)
+    const {signInUser, googleSignIn} = useContext(AuthContext)
     const { register,  handleSubmit } = useForm()
     const navigate = useNavigate()
     const onSubmit = (data) => {
@@ -17,6 +17,11 @@ const Login = () => {
         })
 
         console.log(data)
+    }
+
+    const googleLogIn = () =>{
+        googleSignIn()
+        navigate('/')
     }
 
     return (
@@ -47,7 +52,12 @@ const Login = () => {
                             <div className="form-control mt-6">
                                 <input className="btn btn-primary " value="Login"  type="submit" />
                             </div>
+                        
+                        <div>
+                            <button onClick={googleLogIn} className=" btn btn-block mt-4 bg-cyan-600 border-0 text-white">Google Sign In</button>
+                        </div>
                         </form>
+
                     </div>
                 </div>
             </div>

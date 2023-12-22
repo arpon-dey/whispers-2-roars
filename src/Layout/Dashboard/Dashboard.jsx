@@ -22,11 +22,18 @@ const Dashboard = () => {
                             Dashboard
                         </NavLink>
                     </li>
-                    <li >
+                    <li className='mb-2'>
                         <NavLink to='/dashboard/createTask'>
                             Create task
                         </NavLink>
                     </li>
+                    <li className='mb-2'>
+                        <NavLink to='/dashboard/home'>
+                           Manage TAsk
+                        </NavLink>
+                    </li>
+                    
+                    
                     <div className="divider "></div>
                     <li>
                         <NavLink to='/'>

@@ -1,18 +1,25 @@
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
-  createBrowserRouter,
   RouterProvider,
+  createBrowserRouter,
 } from "react-router-dom";
-import './index.css';
 import Dashboard from './Layout/Dashboard/Dashboard';
 import Main from './Layout/Main/Main';
 import CreateTask from './Pages/Dashboard/CreateTask/CreateTask';
-import DashboardHome from './Pages/Dashboard/DashboardHome';
+import DashHome from './Pages/Dashboard/CreateTask/DashHome';
+import Edit from './Pages/Dashboard/Edit/Edit';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Register/Register';
 import AuthProviders from './Providers/AuthProviders';
+import PrivateRoute from './Routes/PrivateRoute';
+import './index.css';
+const queryClient = new QueryClient()
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,17 +41,21 @@ const router = createBrowserRouter([
   },
   {
     path: 'dashboard',
-    element: <Dashboard></Dashboard>,
+    element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute> ,
     children: [
 
-     
-      {
-        path: 'dHome',
-        element: <DashboardHome></DashboardHome>
-      },
       {
         path: 'createTask',
         element: <CreateTask></CreateTask>
+      },
+      {
+        path: "home",
+        element: <DashHome></DashHome>
+      },
+      {
+        path: "editTask/:id",
+        element: <Edit></Edit>,
+        loader: ({params}) => fetch(`https://scic-job-task-server-three.vercel.app/tasks/${params.id}`)
       },
       {
         path: '*',
@@ -56,12 +67,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProviders>
-      <div className=''>
 
+      <AuthProviders>
+    <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-      </div>
-    </AuthProviders>
-
-  </React.StrictMode>
+    </QueryClientProvider>
+      </AuthProviders>
+  </React.StrictMode >
 )
